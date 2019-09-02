@@ -1,17 +1,22 @@
 class NegociacaoController {
 
     constructor() {
+
         let $ = document.querySelector.bind(document);
         this._inputData = $('#data');
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');
         this._listaNegociacoes = new ListaNegociacoes();
+
+        this._negociacoesView = new NegociacoesView($('#negociacoesView'));
+        this._negociacoesView.update(this._listaNegociacoes.negociacoes);
     }
 
     adiciona(event) {
         event.preventDefault();
         this._listaNegociacoes.adiciona(this._criaNegociacao());
-        this._clearForm()
+        this._negociacoesView.update(this._listaNegociacoes.negociacoes);
+        this._limpaFormulario();
     }
 
     _criaNegociacao() {
@@ -22,10 +27,10 @@ class NegociacaoController {
         )
     }
 
-    _clearForm() {
-        this._inputData = '';
-        this._inputQuantidade = 1;
-        this._inputValor = 1.0;
-        document.querySelector('#data').focus()
+    _limpaFormulario() {
+        this._inputData.value = '';
+        this._inputQuantidade.value = 1;
+        this._inputValor.value = 1.0;
+        this._inputData.focus();
     }
 }
